@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Juice Box Home Page</h1>
+    <h2>Routes:</h2>
+    <ul>
+      <h3>Users</h3>
+      <li>Get all users: [method: GET, route: /api/users]</li>
+      <li>Get user by id: [method: GET, route: /api/users/:userId]</li>
+      <li>
+        Login [method: POST, route: /api/users/login, body: [username,
+        password]]
+      </li>
+      <li>
+        Register: [method: POST, route: /api/users/register, body: [username,
+        password, name, location]]
+      </li>
+    </ul>
+    <ul>
+      <h3>Posts</h3>
+      <li>Get all posts: [method: GET, route: /api/posts]</li>
+      <li>
+        Create Post [method: POST, route: /api/posts, body: [title, tags,
+        content]]
+      </li>
+      <li>
+        Edit post by id: [method: PATCH, route: /api/posts/:postId, [title,
+        tags, content]]]
+      </li>
+      <li>Delete Post: [method: DELETE, route: /api/posts/:postId]</li>
+    </ul>
+    <ul>
+      <h3>Tags</h3>
+      <li>Get all tags: [method: GET, route: /api/tags]</li>
+      <li>Get posts by tag name: [method: GET, route: /api/:tagName/posts]</li>
+    </ul>
+
+    <script src="script.js"></script>
+  </body>
+</html>

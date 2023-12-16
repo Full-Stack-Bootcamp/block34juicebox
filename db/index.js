@@ -113,14 +113,6 @@ async function getUserByUsername(username) {
     `,
       [username]
     );
-
-    if (!user) {
-      throw {
-        name: "UserNotFoundError",
-        message: "A user with that username does not exist",
-      };
-    }
-
     return user;
   } catch (error) {
     throw error;
@@ -236,10 +228,11 @@ async function getPostById(postId) {
     );
 
     if (!post) {
-      throw {
-        name: "PostNotFoundError",
-        message: "Could not find a post with that postId",
-      };
+      return "no";
+      // throw {
+      //   name: "PostNotFoundError",
+      //   message: "Could not find a post with that postId",
+      // };
     }
 
     const { rows: tags } = await client.query(
@@ -287,6 +280,42 @@ async function getPostsByUser(userId) {
     );
 
     return posts;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function deletePost(id) {
+  try {
+    const {
+      rows: [posts],
+    } = await client.query(
+      `
+      DELETE FROM posts
+      WHERE id =$1
+      RETURNING *;
+      `,
+      [id]
+    );
+    return posts;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function deletePostTagsById(id) {
+  try {
+    const {
+      rows: [postIds],
+    } = await client.query(
+      `
+      DELETE FROM post_tags
+      WHERE "postId" =$1
+      RETURNING *;
+      `,
+      [id]
+    );
+    return postIds;
   } catch (error) {
     throw error;
   }
@@ -414,4 +443,6 @@ module.exports = {
   getAllTags,
   createPostTag,
   addTagsToPost,
+  deletePost,
+  deletePostTagsById,
 };

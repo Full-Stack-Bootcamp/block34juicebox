@@ -1,7 +1,12 @@
 const express = require("express");
 const usersRouter = express.Router();
 
-const { createUser, getAllUsers, getUserByUsername } = require("../db");
+const {
+  createUser,
+  getAllUsers,
+  getUserByUsername,
+  getUserById,
+} = require("../db");
 
 const jwt = require("jsonwebtoken");
 
@@ -11,6 +16,19 @@ usersRouter.get("/", async (req, res, next) => {
 
     res.send({
       users,
+    });
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
+// ORIGINAL API ENDPOINT = GET USER BY ID
+usersRouter.get("/:id", async (req, res, next) => {
+  try {
+    const user = await getUserById(req.params.id);
+
+    res.send({
+      user,
     });
   } catch ({ name, message }) {
     next({ name, message });
@@ -64,7 +82,6 @@ usersRouter.post("/register", async (req, res, next) => {
 
   try {
     const _user = await getUserByUsername(username);
-
     if (_user) {
       next({
         name: "UserExistsError",
